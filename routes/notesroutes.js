@@ -9,20 +9,15 @@ router.get("/",async(req,res)=>{
 })
 
 
-//2nd api to fetch a particular element by ID
-router.get("/note",async(req,res)=>{
-    const noteid=req.query.Noteid;
-    try{
-        const note = await Note.findById(noteid)
-        if(note){
-            res.json(note);
-        } else{
-            res.status(404).json({msg:"Note not found"})
-        }
-    } catch(err){
-        res.status(500).json({msg:err.msg})
-    }
+
+router.get("/note", async (req, res) => {
+    const { Noteid } = req.body;
+    const singleData = await Note.findOne({ Noteid: Noteid });
+    console.log(singleData)
+    res.send(singleData)
 })
+
+
 
 router.post('/notes',async(req,res)=>{
     const note=new Note({
@@ -69,6 +64,28 @@ router.get("/deleteAll", async (req, res) => {
     res.send("deleted all")
 })
 
+
+router.put("/put", async (req, res) => {
+    const { } = req.body;
+    const { Noteid, NoteTitle, Content } = req.body;
+
+
+    const updatedNote = await Note.findOneAndUpdate(
+        { Noteid: Noteid },
+        { $set: { NoteTitle: NoteTitle, Content:Content } },
+        { new: true } // Return the updated document
+    );
+
+    if (!updatedNote) {
+        res.send(`note not found on noteId ${Noteid}`)
+    }
+    else {
+
+        res.send(updatedNote)
+    }
+
+
+})
 
 
 
