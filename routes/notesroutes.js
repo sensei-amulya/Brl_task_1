@@ -2,14 +2,14 @@ const express= require("express")
 const router = express.Router();
 const Note =require('../models/note')
 
-
+//route to display all the Notes
 router.get("/",async(req,res)=>{
     const existingnote=await Note.find();
     res.send(existingnote);
 })
 
 
-
+//route to display note at a particular id
 router.get("/note", async (req, res) => {
     const { Noteid } = req.body;
     const singleData = await Note.findOne({ Noteid: Noteid });
@@ -18,7 +18,7 @@ router.get("/note", async (req, res) => {
 })
 
 
-
+//route to enter new Note
 router.post('/notes',async(req,res)=>{
     const note=new Note({
         Noteid: req.body.Noteid,
@@ -33,25 +33,8 @@ try{
 }
 });
 
-/*router.delete('/notes/:id',async(req,res)=>{
-    try{
-        const note=await Note.findById(req.params.id);
-        if(note==null){
-            return res.status(404).json({msg:"Note not found"});
-        }
-        await note.remove();
-        res.status(200).json({msg:"Deleted Note"})
-    } catch(err){
-        res.status(500).json({message:err.message})
-    }
-})
-*/
-/*router.post("/delete",async(req,res)=>{
-    const {Noteid}=req.body;
-   // console.log(Noteid)
-    await Note.findOneAndDelete({Noteid: Noteid})
-})*/
 
+//route to delete a particular Note
 router.post("/delete1",async(req,res)=>{
     const { Noteid}=req.body;
     await Note.findOneAndDelete({Noteid:Noteid});
@@ -64,7 +47,7 @@ router.get("/deleteAll", async (req, res) => {
     res.send("deleted all")
 })
 
-
+//route to modifiy 
 router.put("/put", async (req, res) => {
     const { } = req.body;
     const { Noteid, NoteTitle, Content } = req.body;
@@ -86,7 +69,7 @@ router.put("/put", async (req, res) => {
 
 
 })
-
+// patch route
 router.patch("/patch", async (req, res) => {
 
     const { Noteid, NoteTitle, Content } = req.body;
@@ -105,7 +88,13 @@ router.patch("/patch", async (req, res) => {
 })
 
 
-
+//to find the recent item entered
+router.get("/recent" , async (req,res) => {
+    const note = await Note.find().sort({createdAt : -1}).limit(1)
+    
+    console.log(note)
+    res.send(note)
+})
 
 
 module.exports=router;
