@@ -87,6 +87,25 @@ router.put("/put", async (req, res) => {
 
 })
 
+router.patch("/patch", async (req, res) => {
+
+    const { Noteid, NoteTitle, Content } = req.body;
+
+    const updatedNote = await Note.findOneAndUpdate(
+        { Noteid: Noteid },
+        { $set: { NoteTitle, Content } },
+        { new: true } // Return the updated document
+    );
+
+    if (!updatedNote) {
+        return res.send(`Note not found on noteId ${noteId}`);
+    }
+
+    res.send(updatedNote);
+})
+
+
+
 
 
 module.exports=router;
