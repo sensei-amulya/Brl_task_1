@@ -3,9 +3,9 @@ const router = express.Router();
 const Note =require('../models/note')
 
 
-router.get("/notes  ",async(req,res)=>{
+router.get("/",async(req,res)=>{
     const existingnote=await Note.find();
-    res.json(existingnote);
+    res.send(existingnote);
 })
 
 
@@ -51,11 +51,25 @@ try{
     }
 })
 */
-router.post("/delete",async(req,res)=>{
+/*router.post("/delete",async(req,res)=>{
     const {Noteid}=req.body;
    // console.log(Noteid)
     await Note.findOneAndDelete({Noteid: Noteid})
+})*/
+
+router.post("/delete1",async(req,res)=>{
+    const { Noteid}=req.body;
+    await Note.findOneAndDelete({Noteid:Noteid});
+    res.send("deleted")
 })
+
+//route to delete all items
+router.get("/deleteAll", async (req, res) => {
+    await Note.deleteMany({})
+    res.send("deleted all")
+})
+
+
 
 
 module.exports=router;
