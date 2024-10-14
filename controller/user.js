@@ -11,6 +11,16 @@ async function Handlesinup(req,res) {
     return res.json("Home")
 }
 
+async function Handlelogin(req,res) {
+    const{ username,password}=req.body
+    const user = await User.findOne({username,password})
+    if(!user) res.json("wrong username or password")
+    
+        return res.json("loggedin")
+}
+
+
 module.exports={
     Handlesinup,
+    Handlelogin,
 }
