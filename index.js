@@ -5,6 +5,8 @@ const cors = require('cors')
 
 const noteroute=require('./routes/notesroutes');
 const { MongoServerClosedError } = require("mongodb");
+
+const userRoute = require('./routes/register')
 const app = express();
 const port =3030;
 
@@ -22,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/notepad1',
     useUnifiedTopology: true,}).then(()=> console.log("MongoDb connected")).catch(err => console.log(err));
 
 app.use('/api',noteroute);
+app.use('/user',userRoute)
 app.listen(port,() =>{
     console.log("Server running ")
 })

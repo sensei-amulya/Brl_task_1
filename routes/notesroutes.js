@@ -77,7 +77,7 @@ router.patch("/patch", async (req, res) => {
     const updatedNote = await Note.findOneAndUpdate(
         { Noteid: Noteid },
         { $set: { NoteTitle, Content } },
-        { new: true } // Return the updated document
+        { new: true } 
     );
 
     if (!updatedNote) {
