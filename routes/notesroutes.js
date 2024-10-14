@@ -5,16 +5,16 @@ const Note =require('../models/note')
 //route to display all the Notes
 router.get("/",async(req,res)=>{
     const existingnote=await Note.find();
-    res.send(existingnote);
+    res.json(existingnote);
 })
 
 
 //route to display note at a particular id
-router.get("/note", async (req, res) => {
-    const { Noteid } = req.body;
-    const singleData = await Note.findOne({ Noteid: Noteid });
-    console.log(singleData)
-    res.send(singleData)
+router.get("/note/:Noteid", async (req, res) => {
+    const  Noteid  = req.params.Noteid;
+    const singleData = await Note.findOne({ Noteid});
+    //console.log(singleData)
+    res.json(singleData)
 })
 
 
@@ -35,10 +35,10 @@ try{
 
 
 //route to delete a particular Note
-router.post("/delete1",async(req,res)=>{
-    const { Noteid}=req.body;
+router.post("/deleteOne/:Noteid",async(req,res)=>{
+    const  Noteid=req.params.Noteid
     await Note.findOneAndDelete({Noteid:Noteid});
-    res.send("deleted")
+    res.send("deleted ")
 })
 
 //route to delete all items
