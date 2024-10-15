@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 
- mongoose.connect('mongodb+srv://amulyagupta26:ila3D0u3sYaOInZv@notepadapp.nfrun.mongodb.net/note_making',
+ mongoose.connect('mongodb+srv://amulyagupta26:"**"@notepadapp.nfrun.mongodb.net/note_making',
    { useNewUrlParser: true,
     useUnifiedTopology: true,})
     .then(()=> console.log("MongoDb connected")).
