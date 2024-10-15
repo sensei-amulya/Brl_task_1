@@ -2,6 +2,6 @@ const express = require("express")
 const {Handlesinup} = require("../controller/user")
 const router = express.Router()
 
-router.post("/" , Handlesinup);
+router.post("/register" , Handlesinup);
 
 module.exports = router

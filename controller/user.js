@@ -8,7 +8,7 @@ async function Handlesinup(req,res) {
         username,
         password
     });
-    return res.json("Home")
+    return res.status(200).json("The New user is registered succesfully")
 }
 
 async function Handlelogin(req,res) {
@@ -16,7 +16,7 @@ async function Handlelogin(req,res) {
     const user = await User.findOne({username,password})
     if(!user) res.json("wrong username or password")
     
-        return res.json("loggedin")
+        return res.status(200).json("loggedin")
 }
 
 
