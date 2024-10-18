@@ -20,9 +20,9 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 
+const mongodb_atlasURL='mongodb+srv://amulyagupta26:ila3D0u3sYaOInZv@notepadapp.nfrun.mongodb.net/note_making'
 
-
- mongoose.connect('mongodb+srv://amulyagupta26:ila3D0u3sYaOInZv@notepadapp.nfrun.mongodb.net/note_making',
+ mongoose.connect(mongodb_atlasURL,
    { useNewUrlParser: true,
     useUnifiedTopology: true,})
     .then(()=> console.log("MongoDb connected")).

@@ -1,9 +1,11 @@
 const express= require("express")
 const router = express.Router();
 const Note =require('../models/note')
+const {islogged}=require('../middelwares/islogged')
+
 
 //route to display all the Notes
-router.get("/",async(req,res)=>{
+router.get("/",islogged,async(req,res)=>{
     const existingnote=await Note.find();
     res.json(existingnote);
 })
