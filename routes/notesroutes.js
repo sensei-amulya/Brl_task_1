@@ -1,14 +1,24 @@
 const express= require("express")
 const router = express.Router();
+const user=require('../models/userSch')
 const Note =require('../models/note')
 const {islogged}=require('../middelwares/islogged')
 
 
 //route to display all the Notes
 router.get("/",islogged,async(req,res)=>{
-    const existingnote=await Note.find();
-    res.json(existingnote);
-})
+    if(req.user){
+        const User=await user.findOne({username:req.User.username})
+        const existingnote=await Note.find({userId:user._id})
+        res.json(existingnote);
+    }
+    else{
+        res.json("First login and search the note")
+    }
+
+
+
+    })
 
 
 //route to display note at a particular id
@@ -21,8 +31,8 @@ router.get("/note/:Noteid", async (req, res) => {
 
 
 //route to enter new Note
-router.post('/notes',async(req,res)=>{
-    const note=new Note({
+router.post('/notes',islogged,async(req,res)=>{
+    /*const note=new Note({
         Noteid: req.body.Noteid,
         NoteTitle:req.body.NoteTitle,
         Content:req.body.Content,
@@ -32,7 +42,35 @@ try{
     res.status(201).json(newNote);
 }catch(err){
     req.status(400).json({msg : err.message})
+}*/
+
+try{
+const {Noteid,NoteTitle,Content}=req.body;
+if(req.user){
+    const {username}=req.user;
+
+    let id =await Note.findOne({Noteid:Noteid})
+    let user=await user.findOne({username})
+    console.log(user)
+    if(id){
+        res.json({msg:"Please enter another ID"})
+    }
+    else{
+        const NewNote=await Note.create({
+            NoteId:Noteid,
+            NoteTitle:NoteTitle,
+            Content:Content,
+            userId:user.id
+        })
+        NewNote.userId=user._id
+        res.json(NewNote)
+    }
+} else{
+    res.json({msg:"First login ,you are redirected to /login"})
+}} catch(err){
+    res.status(400).json({msg:err.msg})
 }
+
 });
 
 

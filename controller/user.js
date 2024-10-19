@@ -5,7 +5,8 @@ const cookieparser=require('cookie-parser')
 const islogged=require('../middelwares/islogged')
 const bcrypt=require('bcryptjs')
 //const { use } = require('../routes/register')
-const secret="123456"
+require('dotenv').config()
+
 
 const app=express()
 app.use(cookieparser())
@@ -60,10 +61,10 @@ async function Handlelogin(req,res) {
    const isMatch=await bcrypt.compare(password,user_data.password)
    if(!isMatch){return res.status(400).json({msg:"Invalid Credentials"})}
     //JWT Generation
-    const token=jwt.sign({username},secret,{expiresIn:'1h'})
-    res.cookie("token",token)
-    console.log(token)
-    res.send({token});}
+    const token=jwt.sign({username},process.env.secret,{expiresIn:'1h'})
+    res.cookie("jwttoken",token,{httpOnly:true,secure:true});
+    //console.log(token)
+    res.status(200).json({msg:"User Logged in succesfully"});}
     catch(error){
         res.status(400).json({msg:error.msg})
         console.log(error)
