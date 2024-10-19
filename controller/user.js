@@ -68,9 +68,22 @@ async function Handlelogin(req,res) {
         res.status(400).json({msg:error.msg})
         console.log(error)
     }
-
 }
+
+async function HandleLogout(req,res)  {
+    try{res.cookie("token","")
+    res.json("Cookie erased redirected to /login")
+    }catch(err){
+        res.status(400).json({msg:error.msg})
+        console.log(error)
+
+    }
+}
+
+
+
 module.exports={
     Handlesinup,
     Handlelogin,
+    HandleLogout
 }

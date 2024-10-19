@@ -7,6 +7,7 @@ const noteroute=require('./routes/notesroutes');
 const { MongoServerClosedError } = require("mongodb");
 const userlog=require('./routes/login')
 const userRoute = require('./routes/register');
+const UserLogout=require('./routes/logout')
 const note = require("./models/note");
 const staticroute=require('./routes/staticroute')
 const app = express();
@@ -35,6 +36,7 @@ app.use('/',staticroute)
 app.use('/api',noteroute);
 app.use('/user',userRoute);
 app.use('/user',userlog);
+app.use('/user',UserLogout)
 app.listen(port,() =>{
     console.log("Server running ")
 })
