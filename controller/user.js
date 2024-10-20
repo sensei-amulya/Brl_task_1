@@ -15,7 +15,7 @@ app.use(cookieparser())
 
 async function Handlesinup(req, res) {
     try {
-        const { Name, username, password } = req.body;
+        const { Name, username,email, password } = req.body;
         const data = await User.findOne({ username })
         if (data) {
             return res.status(400).json({ msg: "Username must be unique" })
@@ -29,7 +29,7 @@ async function Handlesinup(req, res) {
             onst token =jwt.sign({username},"secret");
              res.cokie("token",token)*/
             const hashedpass = await bcrypt.hash(password, 10)
-            const user = new User({ Name, username, password: hashedpass })
+            const user = new User({ Name, username, email,password: hashedpass })
             await user.save();
             return res.status(200).json("The New user is registered succesfully")
         }

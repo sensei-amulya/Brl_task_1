@@ -15,8 +15,7 @@ const staticroute = require('./routes/staticroute')
 const passport = require("passport")
 const session = require("express-session")
 const GoogleStrategy = require("passport-google-oauth20").Strategy
-
-
+const email=require('./controller/email')
 
 
 
@@ -110,7 +109,7 @@ app.get("/profile", (req, res) => {
  
 
 
-
+app.use('/',email)
 app.use('/', staticroute)
 app.use('/api', noteroute);
 app.use('/register', userRoute);

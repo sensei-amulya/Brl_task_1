@@ -10,6 +10,9 @@ const UserSchema=new mongoose.Schema({
         unique:true,
         required:true
     },
+    email : {
+        type : String
+    },
     password:{
         type:String,
         required :true
@@ -17,6 +20,12 @@ const UserSchema=new mongoose.Schema({
     Noteid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"note"
+    },
+    resetPasswordToken:{
+        type:String,default:null
+    },
+    resetPassTokenExpiry:{
+        type:Date,
     }
 },{timestamps:true})
 
