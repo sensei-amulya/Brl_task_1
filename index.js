@@ -85,11 +85,6 @@ app.get("/", (req, res) => {
   })
   
 
-
-
-
-
-
 app.get("/auth/google/",
     passport.authenticate("google", { scope: ["profile", "email"] })
 )
@@ -106,40 +101,25 @@ app.get("/profile", (req, res) => {
     res.send(`<h1>Welcome ${req.user.displayName} </h1>`)
 })
 
-
+/*app.get("/logout",(req,res)=>{
+    req.logOut(
+        req.redirect('/')
+    )
+})*/
 
  
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.use('/', staticroute)
 app.use('/api', noteroute);
-app.use('/user', userRoute);
-app.use('/user', userlog);
-app.use('/user', UserLogout)
+app.use('/register', userRoute);
+app.use('/login', userlog);
+app.use('/logout', UserLogout)
 
 app.get("/cookie", (req, res) => {
     res.send(req.cookies)
 })
-
-
-
-
-
 
 
 
