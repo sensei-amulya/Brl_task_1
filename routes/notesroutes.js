@@ -27,7 +27,7 @@ router.get("/note", islogged, async (req, res) => {
         console.log(user_dat)
         const singleData = await Note.findOne({ Noteid: Noteid, userId: user._id });
         if (singleData) {
-           return res.json(singleData)
+            return res.json(singleData)
         }
         else { res.json({ msg: `No user with the Noteid: =${Noteid}` }) }
     } else {
@@ -39,34 +39,37 @@ router.get("/note", islogged, async (req, res) => {
 //route to enter new Note
 router.post('/notes', islogged, async (req, res) => {
 
-
-    try {
-        const { Noteid, NoteTitle, Content } = req.body;
-        if (req.user) {
+        const { Noteid, NoteTitle, Content} = req.body;
+        
+        try {
+            
+         if (req.user) {
             const { username } = req.user;
-
-            let id = await Note.findOne({ Noteid: Noteid })
-            let user = await user.findOne({ username })
+            console.log(username)
+            const id = await Note.findOne({ Noteid: Noteid })
+            console.log(id)
+            const user = await user.findOne({ username })
             console.log(user)
             if (id) {
                 res.json({ msg: "Please enter another ID" })
             }
             else {
                 const NewNote = await Note.create({
-                    NoteId: Noteid,
+                    Noteid: Noteid,
                     NoteTitle: NoteTitle,
                     Content: Content,
-                    userId: user.id
+                    userId: user._id
                 })
-                NewNote.userId = user._id
-                res.json(NewNote)
-            }
-        } else {
+                // NewNote.userId = user._id
+                // res.json(NewNote)
+                res.send(NewNote)
+            }}
+         else {
             res.json({ msg: "First login ,you are redirected to /login" })
         }
-    } catch (err) {
+    }catch (err) {
         res.status(400).json({ msg: err.msg })
-    }
+     }
 
 });
 
